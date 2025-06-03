@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alur AI FruitManager</title>
+  <style>
+    /* ====== style.css (embedded) ====== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body,
+    html {
+      background-color: #ffffff;
+      font-family: 'Open Sans', sans-serif;
+      line-height: 1.4;
+      color: #1A1A1A;
+      padding: 20px;
+    }
+
+    #container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Judul */
+    #title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0F4C75;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Flowchart (vertikal) */
+    #flowchart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .box {
+      width: 100%;
+      border: 2px solid #000;
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      text-align: left;
+    }
+
+    .box-text {
+      font-size: 14px;
+    }
+
+    .icon-row {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .input-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .arrow-vert {
+      font-size: 24px;
+      margin-bottom: 10px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Label Cabang */
+    .branch-labels {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      margin-bottom: 2px;
+    }
+
+    .branch-label-box {
+      width: 48%;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* Container untuk isi cabang */
+    .branch-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      margin-bottom: 10px;
+    }
+
+    .branch-box {
+      width: 48%;
+      border: 2px solid #000;
+      background: #fff;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .branch-box .box-text {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Judul -->
+    <div id="title">Alur AI FruitManager</div>
+
+    <!-- Flowchart vertikal -->
+    <div id="flowchart">
+      <!-- Langkah 1: Terima Input -->
+      <div class="box" id="step1">
+        <div class="box-text">
+          <div class="icon-row">☁️🔼 Terima Input via API</div>
+          <div class="input-item">🍎 Daftar Berat Buah (kg)</div>
+          <div class="input-item">💸 Total Harga Buah</div>
+          <div class="input-item">🛣️ Jarak (km)</div>
+          <div class="input-item">⛽ Harga Bensin (Rp/L)</div>
+          <div class="input-item">☁️🌤 Cuaca (0/1)</div>
+          <div class="input-item">📅 Tanggal (DD-MM-YYYY)</div>
+        </div>
+      </div>
+
+      <!-- Panah 1 -->
+      <div class="arrow-vert" id="arrow1">⬇️</div>
+
+      <!-- Langkah 2: Cek Hari Libur -->
+      <div class="box" id="step2">
+        <div class="box-text">
+          <div class="icon-row">📅✔️ Cek Hari Libur</div>
+          <div>→Apakah tanggal yang dipilih termasuk hari libur (tanggal merah atau hari Minggu)?</div>
+        </div>
+      </div>
+
+      <!-- Panah 2 -->
+      <div class="arrow-vert" id="arrow2">⬇️</div>
+
+      <!-- Langkah 3: Hitung Harga Buah -->
+      <div class="box" id="step3">
+        <div class="box-text">
+          <div class="icon-row">⚖️ Hitung Total Berat Buah</div>
+          <div>sum(daftar_berat_buah) = total_berat_buah</div>
+        </div>
+      </div>
+
+      <!-- Panah 3 -->
+      <div class="arrow-vert" id="arrow3">⬇️</div>
+
+      <!-- Langkah 4: Hitung Biaya Transportasi -->
+      <div class="box" id="step4">
+        <div class="box-text">
+          <div class="icon-row">🚚 Hitung Biaya Transportasi</div>
+          <div>jarak × harga_bensin ÷ 40 = biaya_transportasi</div>
+        </div>
+      </div>
+
+      <!-- Panah 4 -->
+      <div class="arrow-vert" id="arrow4">⬇️</div>
+
+      <!-- Langkah 5: Keputusan Jarak < 10 km? -->
+      <div class="box" id="step5">
+        <div class="box-text">
+          <div class="icon-row">🔷 Apakah Jarak &lt; 10 km?</div>
+        </div>
+      </div>
+
+      <!-- Panah ke cabang -->
+      <div class="arrow-vert" id="arrow5">⬇️</div>
+
+      <!-- Label Cabang -->
+      <div class="branch-labels" id="branchLabels">
+        <div class="branch-label-box">JIKA &lt; 10 KM</div>
+        <div class="branch-label-box">JIKA ≥ 10 KM</div>
+      </div>
+
+      <!-- Container cabang: dua kotak berdampingan -->
+      <div class="branch-container" id="branches">
+        <!-- Cabang Ya: Model AI -->
+        <div class="branch-box" id="step6a">
+          <div class="box-text">
+            <div class="icon-row">🧠 Model AI (RandomForest)</div>
+            <div>Input:</div> 
+              <div>&nbsp;&nbsp;1. total_berat_buah</div> 
+              <div>&nbsp;&nbsp;2. Jarak</div>
+              <div>&nbsp;&nbsp;3. harga_bensin</div> 
+              <div>&nbsp;&nbsp;4. cuaca (0/1)</div> 
+              <div>&nbsp;&nbsp;5. Libur (0/1)</div>
+            <div>Output:</div>
+              <div class="input-item">&nbsp;&nbsp;1. Persentase fee Optimal dari ☁️🌤Cuaca yang dihasilkan Model AI</div>
+              <div class="input-item">&nbsp;&nbsp;2. Persentase fee Optimal dari 📅Libur yang dihasilkan Model AI</div>
+          </div>
+        </div>
+        <!-- Cabang Tidak: Persentase Default -->
+        <div class="branch-box" id="step6b">
+          <div class="box-text">
+            <div class="icon-row">% Persentase Default jika jarak ≥ 10 KM</div>
+            <div>Fee untuk cuaca hujan = 3%, dan cuaca Cerah = 1%</div>
+            <div>Fee untuk Hari Libur = 3%, dan Tidak Libur = 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panah gabung kembali -->
+      <div class="arrow-vert" id="arrow6">⬇️</div>
+
+      <!-- Langkah 7: Hitung Biaya Tambahan -->
+      <div class="box" id="step7">
+        <div class="box-text">
+          <div class="icon-row">💸 Hitung Biaya Tambahan</div>
+          <div>Persentase Fee cuaca × total harga buah </div>
+          <div>Persentase Fee libur × total harga buah</div>
+        </div>
+      </div>
+
+      <!-- Panah 7 -->
+      <div class="arrow-vert" id="arrow7">⬇️</div>
+
+      <!-- Langkah 8: Total Akhir & Return JSON -->
+      <div class="box" id="step8">
+        <div class="box-text">
+          <div class="icon-row">📄 Total Akhir & Return JSON</div>
+          <div>Total harga buah + Biaya transportasi + Harga fee cuaca + Harga fee Libur</div>
+          <div>Perhitungan Harga Total ditampilkan </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ====== script.js (embedded) ====== */
+    window.addEventListener('DOMContentLoaded', () => {
+      const title = document.getElementById('title');
+
+      // Urutan elemen untuk muncul
+      const sequence = [
+        title,
+        document.getElementById('step1'),
+        document.getElementById('arrow1'),
+        document.getElementById('step2'),
+        document.getElementById('arrow2'),
+        document.getElementById('step3'),
+        document.getElementById('arrow3'),
+        document.getElementById('step4'),
+        document.getElementById('arrow4'),
+        document.getElementById('step5'),
+        document.getElementById('arrow5'),
+        document.getElementById('branchLabels'),
+        document.getElementById('branches'),
+        document.getElementById('arrow6'),
+        document.getElementById('step7'),
+        document.getElementById('arrow7'),
+        document.getElementById('step8'),
+      ];
+
+      // Tampilkan judul selama 3 detik, lalu sembunyikan
+      setTimeout(() => {
+        title.style.opacity = 1;
+      }, 100);
+      setTimeout(() => {
+        title.style.opacity = 0;
+      }, 3000);
+
+      // Munculkan seluruh langkah dengan jeda 4 detik
+      let delay = 3500; // mulai ~3.5 detik
+      sequence.slice(1).forEach(el => {
+        setTimeout(() => {
+          el.style.opacity = 1;
+        }, delay);
+        delay += 4000; // jeda 4 detik antar elemen
+      });
+
+      // Tidak ada fade-out akhir; semua tetap visible
+    });
+  </script>
+</body>
+</html>
