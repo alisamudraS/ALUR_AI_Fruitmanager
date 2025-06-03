@@ -78,6 +78,8 @@
       margin-bottom: 10px;
       opacity: 0;
       transition: opacity 0.5s ease;
+      text-align: center;
+      width: 100%;
     }
 
     /* Label Cabang */
@@ -117,6 +119,55 @@
 
     .branch-box .box-text {
       font-size: 14px;
+    }
+
+    /* ====== Responsif ====== */
+    @media (max-width: 600px) {
+      body,
+      html {
+        padding: 10px;
+      }
+      #container {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+      #title {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+      .box {
+        padding: 8px;
+      }
+      .box-text {
+        font-size: 12px;
+      }
+      .icon-row {
+        font-size: 16px;
+      }
+      .input-item {
+        font-size: 12px;
+      }
+      .arrow-vert {
+        font-size: 20px;
+        margin-bottom: 8px;
+      }
+      .branch-labels {
+        flex-direction: column;
+        align-items: center;
+      }
+      .branch-label-box {
+        width: 100%;
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+      .branch-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .branch-box {
+        width: 100%;
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
@@ -234,6 +285,16 @@
       <!-- Panah 7 -->
       <div class="arrow-vert" id="arrow7">⬇️</div>
 
+      <!-- Langkah 7b: Simpan ke CSV & Push ke GitHub -->
+      <div class="box" id="step7b">
+        <div class="box-text">
+          <div class="icon-row">💾 Simpan ke datalatihreal.csv dan Push ke GitHub</div>
+        </div>
+      </div>
+
+      <!-- Panah 7b -->
+      <div class="arrow-vert" id="arrow7b">⬇️</div>
+
       <!-- Langkah 8: Total Akhir & Return JSON -->
       <div class="box" id="step8">
         <div class="box-text">
@@ -268,6 +329,8 @@
         document.getElementById('arrow6'),
         document.getElementById('step7'),
         document.getElementById('arrow7'),
+        document.getElementById('step7b'),
+        document.getElementById('arrow7b'),
         document.getElementById('step8'),
       ];
 
